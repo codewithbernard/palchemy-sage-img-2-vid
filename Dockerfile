@@ -82,13 +82,11 @@ RUN cd /comfyui && \
 # SageAttention build (PEP 517 wheel)
 # =========================
 
-# Extra build tools often needed for CUDA extensions
-RUN apt-get update && apt-get install -y ninja-build && rm -rf /var/lib/apt/lists/*
-
-# Install SageAttention from PyPI, no build isolation so it can see torch/triton,
-# and compile for all modern CUDA architectures via TORCH_CUDA_ARCH_LIST.
-RUN TORCH_CUDA_ARCH_LIST="7.5;8.0;8.6;8.9;9.0;10.0;12.0" \
-    uv pip install "sageattention==2.2.0" --no-build-isolation
+# Download and install precompiled SageAttention 2.2.0 wheel for cp311 Linux
+RUN wget -O /tmp/sageattention-2.2.0-cp311-cp311-linux_x86_64.whl \
+      https://huggingface.co/ModelsLab/Sage_2_plus_plus_build/resolve/main/sageattention-2.2.0-cp311-cp311-linux_x86_64.whl \
+    && uv pip install /tmp/sageattention-2.2.0-cp311-cp311-linux_x86_64.whl \
+    && rm /tmp/sageattention-2.2.0-cp311-cp311-linux_x86_64.whl
 
 # =========================
 # Back to your original layout
