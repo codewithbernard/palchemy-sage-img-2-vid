@@ -130,8 +130,8 @@ WORKDIR /comfyui
 FROM base AS final
 
 # install custom nodes
-RUN comfy-node-install comfyui-custom-scripts
-RUN comfy-node-install comfyui-easy-use
-RUN comfy-node-install comfyui-frame-interpolation
-RUN comfy-node-install ComfyUI-WanVideoWrapper
-RUN comfy-node-install comfyui-kjnodes
+# RUN comfy-node-install comfyui-custom-scripts
+# RUN comfy-node-install comfyui-easy-use
+# RUN comfy-node-install comfyui-frame-interpolation
+# RUN comfy-node-install ComfyUI-WanVideoWrapper
+# RUN comfy-node-install comfyui-kjnodes
