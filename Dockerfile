@@ -85,9 +85,6 @@ RUN cd /comfyui && \
 # Extra build tools often needed for CUDA extensions
 RUN apt-get update && apt-get install -y ninja-build && rm -rf /var/lib/apt/lists/*
 
-# Clone SageAttention
-RUN git clone https://github.com/thu-ml/SageAttention.git /opt/SageAttention
-
 # Install SageAttention from git, forcing a source (PEP 517) build,
 # with TORCH_CUDA_ARCH_LIST covering modern NVIDIA architectures
 RUN TORCH_CUDA_ARCH_LIST="7.5;8.0;8.6;8.9;9.0;10.0;12.0" \
