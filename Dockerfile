@@ -126,6 +126,9 @@ WORKDIR /comfyui
 
 FROM base AS final
 
+# Install comfy-cli for model/node management
+RUN uv pip install comfy-cli
+
 # install custom nodes
 RUN comfy-node-install comfyui-custom-scripts
 RUN comfy-node-install comfyui-easy-use
