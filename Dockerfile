@@ -131,9 +131,8 @@ ARG HUGGINGFACE_ACCESS_TOKEN
 # Install comfy-cli for model/node management
 RUN uv pip install comfy-cli
 
-ENV COMFY_CLI_ANALYTICS=false
-ENV COMFY_CLI_ENABLE_ANALYTICS=false
-ENV COMFY_CLI_ACCEPT_ANALYTICS=false
+# Disable comfy-cli telemetry and skip all prompts
+RUN comfy --skip-prompt tracking disable
 
 # install custom nodes
 RUN comfy-node-install comfyui-custom-scripts
