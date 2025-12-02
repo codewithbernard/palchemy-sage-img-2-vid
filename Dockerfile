@@ -133,6 +133,7 @@ RUN uv pip install comfy-cli
 
 # Disable comfy-cli telemetry and skip all prompts
 RUN comfy --skip-prompt tracking disable
+RUN comfy --workspace /comfyui
 
 # install custom nodes
 RUN comfy-node-install comfyui-custom-scripts
