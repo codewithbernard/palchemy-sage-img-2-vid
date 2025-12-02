@@ -153,4 +153,3 @@ target "base-cuda12-8-1" {
   }
   tags = ["${DOCKERHUB_REPO}/${DOCKERHUB_IMG}:${RELEASE_VERSION}-base-cuda12.8.1"]
 }
-
