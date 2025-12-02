@@ -15,7 +15,7 @@ log=$(mktemp)
 # run installation – some modes return non-zero even on success, so we
 # ignore the exit status and rely on log parsing instead.
 set +e
-comfy node install --mode=remote "$@" 2>&1 | tee "$log"
+comfy node install --skip-prompt --no-enable-telemetry --mode=remote "$@" 2>&1 | tee "$log"
 cli_status=$?
 set -e
 
