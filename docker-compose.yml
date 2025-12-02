@@ -1,7 +1,10 @@
 services:
   comfyui-worker:
-    image: runpod/worker-comfyui:dev
-    pull_policy: never
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: final    # use the final stage from your Dockerfile
+    image: comfyui-worker:sage-cu128   # local name/tag for the built image
     deploy:
       resources:
         reservations:
