@@ -65,10 +65,10 @@ RUN git clone https://github.com/comfy-org/ComfyUI-Manager.git \
 # First install PyTorch 2.9 + CUDA 12.8 wheels, TorchVision, TorchAudio
 # from the official PyTorch cu128 wheel index
 RUN uv pip install \
-      --index-url ${PYTORCH_INDEX_URL} \
-      torch==2.9.0 \
-      torchvision==0.20.0 \
-      torchaudio==2.9.0
+      torch \
+      torchvision \
+      torchaudio \
+      --index-url ${PYTORCH_INDEX_URL}
 
 # Install Triton 3.5 (required by SageAttention)
 RUN uv pip install triton==3.5.0
