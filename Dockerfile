@@ -126,15 +126,21 @@ WORKDIR /comfyui
 
 FROM base AS final
 
+ARG HUGGINGFACE_ACCESS_TOKEN
+
 # Install comfy-cli for model/node management
 RUN uv pip install comfy-cli
 
+ENV COMFY_CLI_ANALYTICS=false
+ENV COMFY_CLI_ENABLE_ANALYTICS=false
+ENV COMFY_CLI_ACCEPT_ANALYTICS=false
+
 # install custom nodes
-RUN comfy-node-install comfyui-custom-scripts
-RUN comfy-node-install comfyui-easy-use
-RUN comfy-node-install comfyui-frame-interpolation
-RUN comfy-node-install ComfyUI-WanVideoWrapper
-RUN comfy-node-install comfyui-kjnodes
+RUN n | comfy-node-install comfyui-custom-scripts
+RUN n | comfy-node-install comfyui-easy-use
+RUN n | comfy-node-install comfyui-frame-interpolation
+RUN n | comfy-node-install ComfyUI-WanVideoWrapper
+RUN n | comfy-node-install comfyui-kjnodes
 
 # vae
 RUN comfy model download --url https://huggingface.co/Comfy-Org/Wan_2.1_ComfyUI_repackaged/resolve/main/split_files/vae/wan_2.1_vae.safetensors --relative-path models/vae --filename wan_2.1_vae.safetensors
