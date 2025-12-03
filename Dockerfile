@@ -71,3 +71,31 @@ WORKDIR /comfyui
 RUN pip install --no-cache-dir -r requirements.txt && \
     pip install --no-cache-dir -r manager_requirements.txt && \
     pip install --no-cache-dir GitPython opencv-python
+
+# -----------------------------------------------------------------------------
+# Python runtime deps for your handler
+# -----------------------------------------------------------------------------
+
+# Go back to root
+WORKDIR /
+
+# Python runtime deps for your handler
+RUN pip install runpod requests websocket-client
+
+# Add application code and scripts (unchanged from your original)
+ADD src/start.sh handler.py test_input.json ./
+RUN chmod +x /start.sh
+
+# Add script to install custom nodes
+COPY scripts/comfy-node-install.sh /usr/local/bin/comfy-node-install
+RUN chmod +x /usr/local/bin/comfy-node-install
+
+# Prevent pip from asking for confirmation during uninstall steps in custom nodes
+ENV PIP_NO_INPUT=1
+
+# Copy helper script to switch Manager network mode at container start
+COPY scripts/comfy-manager-set-mode.sh /usr/local/bin/comfy-manager-set-mode
+RUN chmod +x /usr/local/bin/comfy-manager-set-mode
+
+# Default command
+CMD ["/start.sh"]
