@@ -39,6 +39,10 @@ RUN curl -sS https://bootstrap.pypa.io/get-pip.py -o get-pip.py && \
 ENV PATH=/usr/local/cuda/bin:${PATH}
 ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64
 
+WORKDIR /
+# Python runtime deps for your handler
+RUN python3.12 -m pip install --no-cache-dir runpod requests websocket-client
+
 # Clone ComfyUI to get requirements
 WORKDIR /tmp/build
 RUN git clone https://github.com/comfyanonymous/ComfyUI.git
@@ -47,6 +51,10 @@ RUN git clone https://github.com/comfyanonymous/ComfyUI.git
 WORKDIR /tmp/build/ComfyUI/custom_nodes
 RUN git clone https://github.com/ltdrdata/ComfyUI-Manager.git && \
     git clone https://github.com/kijai/ComfyUI-KJNodes && \
+    git clone https://github.com/pythongosssss/ComfyUI-Custom-Scripts && \
+    git clone https://github.com/yolain/ComfyUI-Easy-Use && \
+    git clone https://github.com/Fannovel16/ComfyUI-Frame-Interpolation && \
+    git clone https://github.com/kijai/ComfyUI-WanVideoWrapper && \
     git clone https://github.com/MoonGoblinDev/Civicomfy
 
 # Install PyTorch and all ComfyUI dependencies
@@ -127,7 +135,21 @@ RUN pip uninstall -y uv 2>/dev/null || true && \
 ENV PATH=/usr/local/cuda/bin:${PATH}
 ENV LD_LIBRARY_PATH=/usr/local/cuda/lib64
 
-
 # Set Python 3.12 as default
 RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1 && \
     update-alternatives --set python3 /usr/bin/python3.12
+
+# Add application code and scripts (unchanged from your original)
+ADD src/start.sh handler.py test_input.json ./
+RUN chmod +x /start.sh
+
+# Add script to install custom nodes
+COPY scripts/comfy-node-install.sh /usr/local/bin/comfy-node-install
+RUN chmod +x /usr/local/bin/comfy-node-install
+
+# Copy helper script to switch Manager network mode at container start
+COPY scripts/comfy-manager-set-mode.sh /usr/local/bin/comfy-manager-set-mode
+RUN chmod +x /usr/local/bin/comfy-manager-set-mode
+
+# Default command
+CMD ["/start.sh"]
