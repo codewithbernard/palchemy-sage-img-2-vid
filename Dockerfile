@@ -42,7 +42,7 @@ RUN apt-get update && apt-get install -y \
     && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 
 # Upgrade pip toolchain
-RUN pip install --upgrade pip setuptools wheel
+RUN python3 -m pip install --upgrade pip setuptools wheel
 
 # Just in case the base image had uv – nuke it so everything uses pip
 RUN pip uninstall -y uv 2>/dev/null || true && \
@@ -99,3 +99,7 @@ RUN chmod +x /usr/local/bin/comfy-manager-set-mode
 
 # Default command
 CMD ["/start.sh"]
+
+# -----------------------------------------------------------------------------
+# Final stage – Comfy nodes and models
+# -----------------------------------------------------------------------------
