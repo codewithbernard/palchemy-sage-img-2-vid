@@ -64,3 +64,9 @@ RUN git clone https://github.com/comfyanonymous/ComfyUI.git /comfyui
 # Clone ComfyUI-Manager into custom_nodes
 RUN git clone https://github.com/comfy-org/ComfyUI-Manager.git \
     /comfyui/custom_nodes/ComfyUI-Manager
+
+WORKDIR /comfyui
+
+# Core ComfyUI deps + extras you used before
+RUN pip install --no-cache-dir -r requirements.txt && \
+    pip install --no-cache-dir GitPython opencv-python
