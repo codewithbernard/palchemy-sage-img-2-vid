@@ -22,6 +22,8 @@ ENV DEBIAN_FRONTEND=noninteractive \
 # -----------------------------
 # Base system + Python
 # -----------------------------
+RUN apt update && apt upgrade -y
+RUN apt install -y software-properties-common cmake
 RUN add-apt-repository ppa:deadsnakes/ppa
 RUN apt-get update && apt-get install -y --no-install-recommends \
     python${PYTHON_VERSION} python3-pip python3-venv python3-dev \
