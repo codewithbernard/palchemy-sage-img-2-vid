@@ -67,6 +67,7 @@ RUN git clone https://github.com/comfy-org/ComfyUI-Manager.git \
 
 WORKDIR /comfyui
 
-# Core ComfyUI deps + extras you used before
+# Now install ComfyUI dependencies (they should accept torch 2.9)
 RUN pip install --no-cache-dir -r requirements.txt && \
+    pip install --no-cache-dir -r manager_requirements.txt && \
     pip install --no-cache-dir GitPython opencv-python
